@@ -17,8 +17,7 @@ const slice = createSlice({
   initialState,
   reducers: {
     curMeasurementRecevied: (state, action: PayloadAction<Measurement>) => {
-      const { metric, at, value, unit } = action.payload;
-      state.metric = metric;
+      const { at, value, unit } = action.payload;
       state.at = at;
       state.value = value;
       state.unit = unit;

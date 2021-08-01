@@ -1,13 +1,12 @@
 import { createSlice, PayloadAction } from 'redux-starter-kit';
 
 export type Measurement = {
-  metric: string;
   at: Date;
   value: number;
   unit: string;
 };
 
-export type MeasurementsForMetric = {
+export type MetricMeasurements = {
   metric: string;
   measurements: Measurement[];
 }
@@ -17,22 +16,15 @@ export type ApiErrorAction = {
 };
 
 const initialState = {
-  metric: '',
-  measurements: [] as Measurement[]
+  data: [] as MetricMeasurements[]
 };
 
 const slice = createSlice({
   name: 'measurements',
   initialState,
   reducers: {
-    measurementsRecevied: (state, action: PayloadAction<MeasurementsForMetric>) => {
-      state.metric = action.payload.metric;
-      state.measurements = action.payload.measurements
-        .filter((measurement: Measurement) => new Date(measurement.at).getSeconds() === 0)
-        .map((measurement: Measurement) => ({
-          ...measurement,
-          at: new Date(measurement.at)
-        }));
+    measurementsRecevied: (state, action: PayloadAction<MetricMeasurements[]>) => {
+      state.data = action.payload;
     },
     measurementApiErrorReceived: (state, action: PayloadAction<ApiErrorAction>) => state,
   },
